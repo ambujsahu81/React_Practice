@@ -14,7 +14,6 @@
     <script src="https://unpkg.com/react-dom@18.1.0/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone@7.12.4/babel.js"></script>
     <script type="text/babel">
-
         class ErrorBoundary extends React.Component {
             state = { error: null }
             static getDerivedStateFromError(error) {
@@ -25,7 +24,6 @@
                 if (error) {
                     return <this.props.FallbackComponent error={error} />
                 }
-
                 return this.props.children
             }
         }
@@ -34,7 +32,7 @@
             alignItems: 'center',
             flexDirection: 'column',
             justifyContent: 'center',
-            marginTop: '5rem'
+            marginTop: '3rem'
         };
         const containerStyle = {
             display: 'flex',
@@ -67,10 +65,17 @@
                 </div>
             )
         }
-
         function App() {
             return (
                 <div style={containerStyle}>
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <BuggyCounter />
+                        <BuggyCounter />
+                    </ErrorBoundary>
+                    <div style={{ margin: "3rem", color: "white", background: "black" }}>Both counter above will crash together whereas counter below will crash individually</div>
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <BuggyCounter />
+                    </ErrorBoundary>
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                         <BuggyCounter />
                     </ErrorBoundary>
@@ -85,5 +90,4 @@
         );
     </script>
 </body>
-
 </html>
